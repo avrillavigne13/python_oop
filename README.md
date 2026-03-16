@@ -1,4 +1,7 @@
-![output](images/title.png)
+
+<p align="center">
+  <img src="images/title.png"/>
+</p>
 
 # ЛР-1 — Класс и инкапсуляция 
 ## Цель работы
