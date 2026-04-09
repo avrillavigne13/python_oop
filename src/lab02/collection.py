@@ -1,0 +1,158 @@
+from typing import List, Optional, Iterator
+from model import Player
+
+
+class PlayerList:
+
+    def __init__(self):
+        # Создаем пустой список, в котором будем хранить всех игроков
+        self._items: List[Player] = []
+    
+    
+    def add(self, player: Player) -> None:
+        
+        # Проверяем, что переданный объект - это игрок (класс Player)
+        if not isinstance(player, Player):
+            raise TypeError(f"Можно добавлять только объекты Player, получен {type(player).__name__}")
+        
+        # Проверяем, нет ли уже игрока с таким именем (запрещаем дубликаты)
+        if self._find_by_name(player.name) is not None:
+            raise ValueError(f"Игрок с именем '{player.name}' уже существует в коллекции")
+        
+        # Добавляем игрока в конец списка
+        self._items.append(player)
+        print(f"  Игрок '{player.name}' добавлен в коллекцию")
+    
+    def remove(self, player: Player) -> None:
+        
+        # Проверяем, есть ли такой игрок в списке
+        if player not in self._items:
+            raise ValueError(f"Игрок '{player.name}' не найден в коллекции")
+        
+        # Удаляем игрока из списка
+        self._items.remove(player)
+        print(f"  Игрок '{player.name}' удален из коллекции")
+    
+    def remove_at(self, index: int) -> Player:
+       
+        # Проверяем, что индекс существует в списке
+        if index < 0 or index >= len(self._items):
+            raise IndexError(f"Индекс {index} вне диапазона (0-{len(self._items)-1})")
+        
+        # Удаляем и возвращаем игрока по индексу
+        removed = self._items.pop(index)
+        print(f"  Игрок '{removed.name}' удален по индексу {index}")
+        return removed
+    
+    def get_all(self) -> List[Player]:
+        
+        # Возвращаем копию списка, чтобы нельзя было изменить внутренний список напрямую
+        return self._items.copy()
+    
+    
+    def _find_by_name(self, name: str) -> Optional[Player]:
+     
+        # Перебираем всех игроков и сравниваем имена (без учета регистра)
+        for player in self._items:
+            if player.name.lower() == name.lower():
+                return player
+        return None
+    
+    def find_by_name(self, name: str) -> Optional[Player]:
+    
+        return self._find_by_name(name)
+    
+    def find_by_level(self, level: int) -> List[Player]:
+    
+        # Создаем список, куда будем добавлять подходящих игроков
+        result = []
+        for player in self._items:
+            if player.level == level:
+                result.append(player)
+        return result
+    
+    def find_by_title(self, title: str) -> List[Player]:
+    
+        # Перебираем игроков и проверяем титул
+        result = []
+        for player in self._items:
+            if player.title == title:
+                result.append(player)
+        return result
+    
+    def find_alive(self) -> 'PlayerList':
+     
+        # Создаем новую пустую коллекцию
+        alive_list = PlayerList()
+        # Добавляем в неё всех живых игроков
+        for player in self._items:
+            if player.is_alive:
+                alive_list.add(player)
+        return alive_list
+    
+    
+    def __len__(self) -> int:
+   
+        return len(self._items)
+    
+    def __iter__(self) -> Iterator[Player]:
+    
+        # Возвращаем итератор из внутреннего списка
+        return iter(self._items)
+    
+    def __getitem__(self, index: int) -> Player:
+    
+        # Проверяем, что индекс правильный
+        if index < 0 or index >= len(self._items):
+            raise IndexError(f"Индекс {index} вне диапазона (0-{len(self._items)-1})")
+        return self._items[index]
+    
+    def __contains__(self, player: Player) -> bool:
+    
+        return player in self._items
+    
+    def __str__(self) -> str:
+    
+        if len(self._items) == 0:
+            return "PlayerList (пусто)"
+        
+        result = f"PlayerList ({len(self._items)} игроков):\n"
+        for i, player in enumerate(self._items):
+            result += f"  [{i}] {player.name} (ур. {player.level}) - {player.title}\n"
+        return result
+    
+    def __repr__(self) -> str:
+    
+        return f"PlayerList({self._items})"
+    
+    
+    def sort_by_name(self, reverse: bool = False) -> 'PlayerList':
+       
+        # Создаем новую коллекцию
+        sorted_list = PlayerList()
+        # Копируем всех игроков
+        sorted_list._items = self._items.copy()
+        # Сортируем по имени (используем lambda для получения имени)
+        sorted_list._items.sort(key=lambda p: p.name, reverse=reverse)
+        return sorted_list
+    
+    def sort_by_level(self, reverse: bool = False) -> 'PlayerList':
+       
+        sorted_list = PlayerList()
+        sorted_list._items = self._items.copy()
+        # Сортируем по уровню
+        sorted_list._items.sort(key=lambda p: p.level, reverse=reverse)
+        return sorted_list
+    
+    def sort(self, key: str, reverse: bool = False) -> 'PlayerList':
+       
+        # Список разрешенных атрибутов для сортировки
+        allowed_keys = ['name', 'level', 'health', 'experience']
+        if key not in allowed_keys:
+            raise ValueError(f"Неверный ключ сортировки. Доступно: {allowed_keys}")
+        
+        sorted_list = PlayerList()
+        sorted_list._items = self._items.copy()
+        # Сортируем, получая значение атрибута через getattr
+        sorted_list._items.sort(key=lambda p: getattr(p, key), reverse=reverse)
+        return sorted_list

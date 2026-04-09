@@ -101,19 +101,15 @@ class Player:
     
     @experience.setter
     def experience(self, value: int):
-        """
-        Сеттер для опыта со специальной валидацией.
-        При достижении порога может повысить уровень.
-        """
-        # Проверка, что игрок жив (нельзя получать опыт мертвым)
         if not self._is_alive:
             raise ValueError(f"Нельзя добавить опыт мертвому игроку '{self._name}'")
-        
-        # Специальная валидация для опыта
-        validate.validate_experience(value, self._level)
+    
+    # Проверяем только что опыт не отрицательный
+        if value < 0:
+            raise ValueError(f"Опыт не может быть отрицательным: {value}")
+    
         self._experience = value
-        
-        # Логика повышения уровня (поведение, зависящее от состояния)
+    
         while self._experience >= self._level * self.EXPERIENCE_PER_LEVEL and self._level < self.MAX_LEVEL:
             self._level_up()
     
@@ -138,10 +134,11 @@ class Player:
     # === Бизнес-методы ===
     
     def _level_up(self):
-        """Внутренний метод повышения уровня."""
         if self._level < self.MAX_LEVEL:
+            needed_exp = self._level * self.EXPERIENCE_PER_LEVEL
+            self._experience -= needed_exp
+        
             self._level += 1
-            # Восстанавливаем здоровье при повышении уровня
             self._health = self.MAX_HEALTH
             self._update_alive_status()
             print(f"[ПОВЫШЕНИЕ УРОВНЯ] {self._name} достиг уровня {self._level}!")
