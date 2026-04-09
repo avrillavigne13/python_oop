@@ -1,8 +1,4 @@
 
-<p align="center">
-  <img src="/../../images/title.png"/>
-</p>
-
 # ЛР-1 — Класс и инкапсуляция 
 ## Цель работы
 
@@ -226,19 +222,19 @@ python_labs/
 
 ### СЦЕНАРИЙ 1: СОЗДАНИЕ ИГРОКОВ И ВАЛИДАЦИЯ
 
-![output](images/lab01/1.png)
+![output](/images/lab01/1.png)
 
 ### Сценарий 2: Демонстрация состояний и поведения.
 
-![output](images/lab01/2.png)
+![output](/images/lab01/2.png)
 
 ### Сценарий 3: Повышение уровня и смерть игрока.
 
-![output](images/lab01/3.png)
+![output](/images/lab01/3.png)
 
 ### Сценарий 4: Демонстрация магических методов.
 
-![output](images/lab01/4.png)
+![output](/images/lab01/4.png)
 
 # Ответы на вопросы по лабораторной работе
 
