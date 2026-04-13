@@ -1,6 +1,11 @@
-from typing import List, Optional, Iterator
-from model import Player
+import sys
+import os
 
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lab03'))
+
+from base import Player
+
+from typing import List, Optional, Iterator
 
 class PlayerList:
 
@@ -156,3 +161,23 @@ class PlayerList:
         # Сортируем, получая значение атрибута через getattr
         sorted_list._items.sort(key=lambda p: getattr(p, key), reverse=reverse)
         return sorted_list
+    
+
+    def get_warriors(self):
+        """Получить только воинов."""
+        from models import Warrior
+        return [p for p in self._items if isinstance(p, Warrior)]
+
+    def get_mages(self):
+        """Получить только магов."""
+        from models import Mage
+        return [p for p in self._items if isinstance(p, Mage)]
+
+    def get_archers(self):
+        """Получить только лучников."""
+        from models import Archer
+        return [p for p in self._items if isinstance(p, Archer)]
+
+    def find_by_type(self, player_type: str):
+        """Поиск по типу игрока."""
+        return [p for p in self._items if p.get_player_type() == player_type]
