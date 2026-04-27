@@ -6,11 +6,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lab01'))
 import validate
 
 class Player:
-    """
-    Базовый класс Игрок (Player) для игровой логики.
-    От него будут наследоваться специализированные классы.
-    """
-    
+
     MAX_LEVEL = 10
     MIN_LEVEL = 1
     MAX_HEALTH = 100.0
@@ -157,17 +153,16 @@ class Player:
         self._update_alive_status()
         return f"[ВОСКРЕШЕНИЕ] {self._name} воскрешен! Здоровье: {self._health:.1f}"
     
-    # ========== НОВЫЕ МЕТОДЫ ДЛЯ ЛР-3 (ПОЛИМОРФИЗМ) ==========
+    # ПОЛИМОРФИЗМ
     
     def get_player_type(self) -> str:
         """Возвращает тип игрока. Будет переопределён в дочерних классах."""
         return "Обычный игрок"
     
     def calculate_power(self) -> float:
-        """Вычисляет силу игрока (для рейтинга)."""
-        return self._level * (self._health / self.MAX_HEALTH)
+        return round(self._level * (self._health / self.MAX_HEALTH), 2)
     
-    # ========== МАГИЧЕСКИЕ МЕТОДЫ ==========
+    # МАГИЧЕСКИЕ МЕТОДЫ
     
     def __str__(self) -> str:
         status = "ЖИВ" if self._is_alive else "МЕРТВ"

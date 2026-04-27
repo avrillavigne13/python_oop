@@ -1,9 +1,9 @@
 import sys
 import os
 
-# Добавляем пути
-sys.path.insert(0, os.path.dirname(__file__))  # для base.py и models.py
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lab02'))  # для collection.py
+
+sys.path.insert(0, os.path.dirname(__file__))  
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'lab02')) 
 
 from base import Player
 from collection import PlayerList

@@ -162,7 +162,6 @@ class PlayerList:
         sorted_list._items.sort(key=lambda p: getattr(p, key), reverse=reverse)
         return sorted_list
     
-
     def get_warriors(self):
         """Получить только воинов."""
         from models import Warrior
@@ -181,3 +180,48 @@ class PlayerList:
     def find_by_type(self, player_type: str):
         """Поиск по типу игрока."""
         return [p for p in self._items if p.get_player_type() == player_type]
+    
+        # === НОВЫЕ МЕТОДЫ ДЛЯ ЛР-4 (добавить в класс PlayerList) ===
+    
+    def get_printable(self):
+        """Получить все объекты, реализующие интерфейс Printable."""
+        try:
+            import sys
+            import os
+            sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+            from lab04.interfaces import Printable
+            return [p for p in self._items if isinstance(p, Printable)]
+        except ImportError:
+            return []
+    
+    def get_comparable(self):
+        """Получить все объекты, реализующие интерфейс Comparable."""
+        try:
+            import sys
+            import os
+            sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+            from lab04.interfaces import Comparable
+            return [p for p in self._items if isinstance(p, Comparable)]
+        except ImportError:
+            return []
+    
+    def get_damageable(self):
+        """Получить все объекты, реализующие интерфейс Damageable."""
+        try:
+            import sys
+            import os
+            sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+            from lab04.interfaces import Damageable
+            return [p for p in self._items if isinstance(p, Damageable)]
+        except ImportError:
+            return []
+    
+    def sort_by_power(self, reverse: bool = True):
+        """Сортировка по силе (использует calculate_power)."""
+        sorted_list = PlayerList()
+        sorted_list._items = self._items.copy()
+        try:
+            sorted_list._items.sort(key=lambda p: p.calculate_power(), reverse=reverse)
+        except AttributeError:
+            sorted_list._items.sort(key=lambda p: p.level, reverse=reverse)
+        return sorted_list

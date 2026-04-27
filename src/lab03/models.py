@@ -45,8 +45,7 @@ class Warrior(Player):
         return "Воин"
     
     def calculate_power(self) -> float:
-        """Сила воина с учётом брони."""
-        return super().calculate_power() * (1 + self._armor / 100)
+        return round(super().calculate_power() * (1 + self._armor / 100), 2)
     
     def __str__(self) -> str:
         return f"[Воин] {self._name} | Ур.{self._level} | Здоровье: {self._health:.0f} | Броня: {self._armor}% | Оружие: {self._weapon}"
@@ -102,8 +101,7 @@ class Mage(Player):
         return "Маг"
     
     def calculate_power(self) -> float:
-        """Сила мага с учётом маны."""
-        return super().calculate_power() * (1 + self._mana / self._max_mana * 0.3)
+        return round(super().calculate_power() * (1 + self._mana / 100 * 0.3), 2)
     
     def __str__(self) -> str:
         return f"[Маг] {self._name} | Ур.{self._level} | Здоровье: {self._health:.0f} | Мана: {self._mana}/{self._max_mana} | Заклинание: {self._spell}"
@@ -144,8 +142,7 @@ class Archer(Player):
         return "Лучник"
     
     def calculate_power(self) -> float:
-        """Сила лучника с учётом меткости."""
-        return super().calculate_power() * (1 + self._accuracy / 100 * 0.2)
+        return round(super().calculate_power() * (1 + self._accuracy / 100 * 0.2), 2)
     
     def __str__(self) -> str:
         return f"[Лучник] {self._name} | Ур.{self._level} | Здоровье: {self._health:.0f} | Меткость: {self._accuracy}% | Лук: {self._bow_type}"
