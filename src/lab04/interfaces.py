@@ -1,18 +1,9 @@
-# interfaces.py
-"""
-Абстрактные классы (интерфейсы) для ЛР-4.
-"""
 
 from abc import ABC, abstractmethod
 from typing import Any
 
 
-class Printable(ABC):
-    """
-    Интерфейс "Печатаемый".
-    Требует реализовать метод для получения строкового представления.
-    """
-    
+class Printable(ABC):  
     @abstractmethod
     def to_string(self) -> str:
         """Возвращает строковое представление объекта."""
@@ -35,11 +26,6 @@ class Comparable(ABC):
 
 
 class Damageable(ABC):
-    """
-    Интерфейс "Получающий урон".
-    Требует реализовать методы получения урона и лечения.
-    """
-    
     @abstractmethod
     def take_damage(self, amount: float) -> str:
         """Получить урон."""
