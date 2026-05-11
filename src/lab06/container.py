@@ -9,7 +9,6 @@ R = TypeVar('R')
 """TypeVar для результата map-преобразования. Может отличаться от T."""
 
 
-# ========== 2. Generic-класс TypedCollection (оценка 3) ==========
 
 class TypedCollection(Generic[T]):
     """
@@ -108,7 +107,7 @@ class TypedCollection(Generic[T]):
         else:
             return str(item)
     
-    # ========== 3. Методы find, filter, map (оценка 4) ==========
+    
     
     def find(self, predicate: Callable[[T], bool]) -> Optional[T]:
         """
@@ -226,7 +225,7 @@ class TypedCollection(Generic[T]):
         return "T"
 
 
-# ========== 6. Протоколы (оценка 5) ==========
+
 
 class Displayable(Protocol):
     """
