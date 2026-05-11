@@ -9,3 +9,5 @@
 [ЛР-4 — Интерфейсы и абстрактные классы (ABC)](./src/lab04/README.md)
 
 [ЛР-5 — Функции как аргументы. Стратегии и делегаты](./src/lab05/README.md)
+
+[ЛР-6 — Generics и typing](./src/lab06/README.md)
