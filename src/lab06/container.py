@@ -1,13 +1,3 @@
-# container.py
-"""
-Generic-коллекция для ЛР-6.
-Содержит:
-- TypedCollection - обобщённая коллекция с поддержкой типов
-- TypeVar T, R для обобщённых методов
-- Protocol Displayable, Scorable для структурной типизации
-- TypeVar с ограничениями D, S
-"""
-
 from typing import TypeVar, Generic, Callable, Optional, List, Protocol, Any
 
 # ========== 1. TypeVar для Generic-коллекции ==========
